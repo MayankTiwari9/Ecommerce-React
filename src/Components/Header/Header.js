@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import CartContext from "../../store/cart-context";
+import { Link } from "react-router-dom";
 
 const Header = (props) => {
   const cartCtx = useContext(CartContext);
@@ -11,18 +12,18 @@ const Header = (props) => {
 
   return (
     <div>
-      <Navbar className="position-fixed w-100" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
+      <Navbar className="position-fixed w-100 mt-0 p-0" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home">Ecommerce</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav" >
             <Nav className="me-auto">
-              <Nav.Link href="#home" className="active">
+              <Nav.Link href="/" className="active">
                 HOME
               </Nav.Link>
-              <Nav.Link href="#link" className="active">
+              <Nav.Link href="/store" className="active">
                 STORE
               </Nav.Link>
-              <Nav.Link href="#about" className="active">
+              <Nav.Link as={Link} to="/about" className="active">
                 ABOUT
               </Nav.Link>
             </Nav>
