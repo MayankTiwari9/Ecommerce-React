@@ -1,10 +1,14 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 
-const Header = () => {
+const Header = (props) => {
+  const onCartOpenHandler = () => {
+    props.setOpenCart(true);
+  }
+
   return (
     <div>
-      <Navbar bg="black" data-bs-theme="dark">
+      <Navbar className="position-fixed w-100" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home">Ecommerce</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav" >
@@ -21,7 +25,7 @@ const Header = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <button className="border border-2 border-primary">Cart (0)</button>
+            <button onClick={onCartOpenHandler} className="border border-2 border-primary">Cart (0)</button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

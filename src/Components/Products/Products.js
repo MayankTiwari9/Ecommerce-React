@@ -43,10 +43,14 @@ const Products = () => {
   return (
     <div className="d-flex flex-column">
       <h1 className="d-flex justify-content-center fst-italic">MUSIC</h1>
+
       {productsArr &&
         productsArr.map((product) => {
           return (
-            <Card className="d-flex mx-auto mt-3 mb-3 border-0" style={{ width: "18rem" }}>
+            <Card
+              className="d-flex mx-auto mt-3 mb-3 border-0"
+              style={{ width: "18rem" }}
+            >
               <Card.Title>{product.title}</Card.Title>
               <Card.Img variant="top" src={product.imageUrl} />
               <Card.Body className="d-flex justify-content-around">
@@ -57,7 +61,12 @@ const Products = () => {
           );
         })}
 
-      <Button variant="secondary d-flex mx-auto mb-5 justify-content-center text-black" style={{width:"200px"}}>See the cart</Button>
+      <Button
+        variant="secondary d-flex mx-auto mb-5 justify-content-center text-black"
+        style={{ width: "200px" }}
+      >
+        See the cart
+      </Button>
     </div>
   );
 };
