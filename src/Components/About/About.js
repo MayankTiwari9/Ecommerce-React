@@ -1,10 +1,8 @@
 import React from "react";
-import Home from "../Home/Home";
 
 const About = () => {
   return (
     <div>
-      <Home />
       <div>
         <h3 className="d-flex mx-auto justify-content-center">About</h3>
         <div className="d-flex m-4">

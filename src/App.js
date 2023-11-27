@@ -17,7 +17,8 @@ function App() {
         <Header setOpenCart={setOpenCart} />
         {openCart && <Cart setOpenCart={setOpenCart} />}
         <Routes>
-          <Route path="/" element={<><Home />, <Products /></>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/store" element={<Products />} />
           <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
