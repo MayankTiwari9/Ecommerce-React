@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import CartContext from "../../store/cart-context";
 
 const Header = (props) => {
+  const cartCtx = useContext(CartContext);
+
   const onCartOpenHandler = () => {
     props.setOpenCart(true);
   }
@@ -25,7 +28,7 @@ const Header = (props) => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <button onClick={onCartOpenHandler} className="border border-2 border-primary">Cart (0)</button>
+            <button onClick={onCartOpenHandler} className="border border-2 border-primary">Cart {cartCtx.items.length}</button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

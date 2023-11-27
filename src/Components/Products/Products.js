@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Card } from "react-bootstrap";
+import CartContext from "../../store/cart-context";
 
 const Products = () => {
+  const cartCtx = useContext(CartContext);
+
+  const addToCartHandler = (item) => {
+    cartCtx.addItem({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      imageUrl: item.imageUrl,
+      quantity: item.quantity || 1,
+    })
+  }
+
   const productsArr = [
     {
+      id: 1,
+
       title: "Colors",
 
       price: 100,
@@ -13,6 +28,8 @@ const Products = () => {
     },
 
     {
+      id: 2,
+
       title: "Black and white Colors",
 
       price: 50,
@@ -22,6 +39,8 @@ const Products = () => {
     },
 
     {
+      id: 3,
+
       title: "Yellow and Black Colors",
 
       price: 70,
@@ -31,6 +50,8 @@ const Products = () => {
     },
 
     {
+      id: 4,
+
       title: "Blue Color",
 
       price: 100,
@@ -41,25 +62,26 @@ const Products = () => {
   ];
 
   return (
-    <div className="d-flex flex-column">
+    <div className="d-flex flex-column w-50 justify-content-center mx-auto">
       <h1 className="d-flex justify-content-center fst-italic">MUSIC</h1>
-
-      {productsArr &&
-        productsArr.map((product) => {
-          return (
-            <Card
-              className="d-flex mx-auto mt-3 mb-3 border-0"
-              style={{ width: "18rem" }}
-            >
-              <Card.Title>{product.title}</Card.Title>
-              <Card.Img variant="top" src={product.imageUrl} />
-              <Card.Body className="d-flex justify-content-around">
-                <Card.Text>${product.price}</Card.Text>
-                <Button variant="primary">ADD TO CART</Button>
-              </Card.Body>
-            </Card>
-          );
-        })}
+      <div className="d-flex flex-row flex-wrap">
+        {productsArr &&
+          productsArr.map((product) => {
+            return (
+              <Card
+                className="d-flex mx-auto mt-3 mb-3 border-0"
+                style={{ width: "18rem" }}
+              >
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Img variant="top" src={product.imageUrl} />
+                <Card.Body className="d-flex justify-content-around">
+                  <Card.Text>${product.price}</Card.Text>
+                  <Button variant="primary" onClick={() => addToCartHandler(product)}>ADD TO CART</Button>
+                </Card.Body>
+              </Card>
+            );
+          })}
+      </div>
 
       <Button
         variant="secondary d-flex mx-auto mb-5 justify-content-center text-black"
