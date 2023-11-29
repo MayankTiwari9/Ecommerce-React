@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import CartContext from "../../store/cart-context";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const cartCtx = useContext(CartContext);
@@ -12,8 +13,8 @@ const Products = () => {
       price: item.price,
       imageUrl: item.imageUrl,
       quantity: item.quantity || 1,
-    })
-  }
+    });
+  };
 
   const productsArr = [
     {
@@ -64,21 +65,30 @@ const Products = () => {
   return (
     <div className="d-flex flex-column w-50 justify-content-center mx-auto">
       <h1 className="d-flex justify-content-center fst-italic">MUSIC</h1>
-      <div className="d-flex flex-row flex-wrap">
+      <div className="d-flex flex-column">
         {productsArr &&
           productsArr.map((product) => {
             return (
-              <Card
-                className="d-flex mx-auto mt-3 mb-3 border-0"
-                style={{ width: "18rem" }}
-              >
-                <Card.Title>{product.title}</Card.Title>
-                <Card.Img variant="top" src={product.imageUrl} />
-                <Card.Body className="d-flex justify-content-around">
-                  <Card.Text>${product.price}</Card.Text>
-                  <Button variant="primary" onClick={() => addToCartHandler(product)}>ADD TO CART</Button>
-                </Card.Body>
-              </Card>
+              <Link to={`/productdetails/${product.id}`}
+              key={product.id}>
+                <Card
+                  key={product.id}
+                  className="d-flex mx-auto mt-3 mb-3 border-0"
+                  style={{ width: "18rem" }}
+                >
+                  <Card.Title>{product.title}</Card.Title>
+                  <Card.Img variant="top" src={product.imageUrl} />
+                  <Card.Body className="d-flex justify-content-around">
+                    <Card.Text>${product.price}</Card.Text>
+                    <Button
+                      variant="primary"
+                      onClick={() => addToCartHandler(product)}
+                    >
+                      ADD TO CART
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Link>
             );
           })}
       </div>
