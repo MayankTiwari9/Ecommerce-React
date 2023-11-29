@@ -26,6 +26,9 @@ const Header = (props) => {
               <Nav.Link as={Link} to="/about" className="active">
                 ABOUT
               </Nav.Link>
+              <Nav.Link as={Link} to="/contact" className="active">
+                CONTACT US
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
