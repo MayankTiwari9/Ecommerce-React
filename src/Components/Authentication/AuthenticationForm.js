@@ -9,13 +9,13 @@ const AuthenticationForm = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
 
-    const formSubmitHandler = (e) => {
+    const formSubmitHandler = async(e) => {
         e.preventDefault();
 
         const enteredEmail = emailRef.current.value;
         const eneteredPassword = passwordRef.current.value;
 
-        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDrOuWyBP38zfBWZC5Fp9B7NSOkXPLUmEU',
+        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDrOuWyBP38zfBWZC5Fp9B7NSOkXPLUmEU',
         {
             method: 'POST',
             body: JSON.stringify({
@@ -39,6 +39,7 @@ const AuthenticationForm = () => {
           })
           .then((data) => {
             tokenContext.login(data.idToken);
+            localStorage.setItem('email', data.email)
             navigate("/store")
           })
           .catch((err) => {

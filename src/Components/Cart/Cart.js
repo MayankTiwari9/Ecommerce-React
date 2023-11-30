@@ -1,49 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CartContext from "../../store/cart-context";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
 
-  const [cartElements, setCartElements] = useState([
-    {
-      id: Math.random(),
+  const [cartElements, setCartElements] = useState([]);
 
-      title: "Colors",
+  const email = localStorage.getItem("email");
+  const updatedEmail = email.replace("@gmail.com", "");
 
-      price: 100,
+  useEffect(() => {
+    getHandler();
+  }, []);
 
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
+  const getHandler = async () => {
+    try {
+      const res = await fetch(
+        `https://crudcrud.com/api/9df7c5fe27cc400889b8a582f8745598/${updatedEmail}`
+      );
+      const data = await res.json();
 
-      quantity: 2,
-    },
-
-    {
-      id: Math.random(),
-
-      title: "Black and white Colors",
-
-      price: 50,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-
-      quantity: 3,
-    },
-
-    {
-      id: Math.random(),
-
-      title: "Yellow and Black Colors",
-
-      price: 70,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-
-      quantity: 1,
-    },
-  ]);
+      setCartElements(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const onCartCloseHandler = () => {
     props.setOpenCart(false);
@@ -81,8 +62,8 @@ const Cart = (props) => {
           QUANTITY
         </h5>
       </div>
-      {cartCtx.items &&
-        cartCtx.items.map((element, index) => {
+      {cartElements &&
+        cartElements.map((element, index) => {
           return (
             <div
               className="d-flex flex-row align-items-center justify-content-center mt-3"
@@ -90,7 +71,7 @@ const Cart = (props) => {
             >
               <div className="d-flex flex-row p-2 align-items-center text-black  w-50 text-center">
                 <img
-                  className="w-75 rounded"  
+                  className="w-75 rounded"
                   src={element.imageUrl}
                   alt="product"
                 />

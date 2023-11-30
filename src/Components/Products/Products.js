@@ -15,7 +15,30 @@ const Products = () => {
     }
   }, [tokenContext.isLoggedIn, navigate]);
 
-  const addToCartHandler = (item) => {
+  const addToCartHandler = async(item) => {
+    const userEmail = localStorage.getItem('email');
+    const updatedEmail = userEmail.replace('@gmail.com', '');
+    const apiUrl = `https://crudcrud.com/api/9df7c5fe27cc400889b8a582f8745598/${updatedEmail}`;
+
+    try{
+    const res = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", 
+      },
+      body: JSON.stringify(item),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }catch(err) {
+    console.log(err);
+  }
+
     cartCtx.addItem({
       id: item.id,
       title: item.title,
@@ -78,26 +101,29 @@ const Products = () => {
         {productsArr &&
           productsArr.map((product) => {
             return (
-              <Link className="text-decoration-none" to={`/productdetails/${product.id}`}
-              key={product.id}>
-                <Card
+              <Card
+                key={product.id}
+                className="d-flex mx-auto mt-3 mb-3 border-0"
+                style={{ width: "18rem" }}
+              >
+                <Link
+                  className="text-decoration-none"
+                  to={`/productdetails/${product.id}`}
                   key={product.id}
-                  className="d-flex mx-auto mt-3 mb-3 border-0"
-                  style={{ width: "18rem" }}
                 >
-                  <Card.Title>{product.title}</Card.Title>
+                  <Card.Title className="text-dark">{product.title}</Card.Title>
                   <Card.Img variant="top" src={product.imageUrl} />
-                  <Card.Body className="d-flex justify-content-around">
-                    <Card.Text>${product.price}</Card.Text>
-                    <Button
-                      variant="primary"
-                      onClick={() => addToCartHandler(product)}
-                    >
-                      ADD TO CART
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Link>
+                  <Card.Text className="text-dark">${product.price}</Card.Text>
+                </Link>
+                <Card.Body className="d-flex justify-content-around">
+                  <Button
+                    variant="primary"
+                    onClick={() => addToCartHandler(product)}
+                  >
+                    ADD TO CART
+                  </Button>
+                </Card.Body>
+              </Card>
             );
           })}
       </div>
