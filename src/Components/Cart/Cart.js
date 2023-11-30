@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import CartContext from "../../store/cart-context";
+import React, { useCallback, useEffect, useState } from "react";
 
 const Cart = (props) => {
-  const cartCtx = useContext(CartContext);
 
   const [cartElements, setCartElements] = useState([]);
 
@@ -10,11 +8,9 @@ const Cart = (props) => {
   const email = localStorage.getItem("email");
   const updatedEmail = email.replace("@gmail.com", "");
 
-  useEffect(() => {
-    getHandler();
-  }, []);
+  
 
-  const getHandler = async () => {
+  const getHandler =  useCallback( async() => {
     try {
       const res = await fetch(
         `https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}`
@@ -27,7 +23,11 @@ const Cart = (props) => {
     } catch (err) {
       console.log(err.message);
     }
-  };
+  },[updatedEmail]);
+
+  useEffect(() => {
+    getHandler();
+  }, [getHandler]);
 
   const onCartCloseHandler = () => {
     props.setOpenCart(false);
@@ -35,7 +35,7 @@ const Cart = (props) => {
 
   const onRemoveItemHandler = async(id) => {
     try{
-      const res= await fetch(`https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}/${id}`,{
+      await fetch(`https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}/${id}`,{
         method: "DELETE",
       })
       setCartElements((prev) => prev.filter((item)=>item._id !== id))

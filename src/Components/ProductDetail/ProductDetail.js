@@ -6,57 +6,6 @@ import { productsArr } from "../Products/ProductArray";
 const ProductDetail = () => {
   const params = useParams();
   const productId = params.productid.replace(":", "");
-  console.log(productsArr);
-
-  const productDetails = [
-    {
-      id: 1,
-      title: "Colors",
-      price: 100,
-      images: [
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-      ],
-      reviews: [{ user: "User1", comment: "Great product!" }],
-    },
-    {
-      id: 2,
-
-      title: "Black and white Colors",
-
-      price: 50,
-
-      images: [
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-      ],
-      reviews: [{ user: "User1", comment: "Nice product!" }],
-    },
-
-    {
-      id: 3,
-
-      title: "Yellow and Black Colors",
-
-      price: 70,
-
-      images: [
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      ],
-      reviews: [{ user: "User1", comment: "Awesome product!" }],
-    },
-
-    {
-      id: 4,
-
-      title: "Blue Color",
-
-      price: 100,
-
-      images: [
-        "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-      ],
-      reviews: [{ user: "User1", comment: "Average product!" }],
-    },
-  ];
 
   const selectedProduct = productsArr.find(
     (product) => product.id === parseInt(productId, 10)

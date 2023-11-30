@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Cart from "./Components/Cart/Cart";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
@@ -22,7 +22,7 @@ function App() {
     setCartCount(item);
   } 
 
-  const getHandlder=async()=>{
+  const getHandlder= useCallback( async()=>{
     try{
       const res= await fetch(`https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updated}`)
       const data= await res.json()
@@ -30,7 +30,7 @@ function App() {
     }catch(err){
       console.log(err)
     }   
-  }
+  },[updated])
     
   useEffect(()=>{
     getHandlder()

@@ -15,7 +15,7 @@ const AuthenticationForm = () => {
         const enteredEmail = emailRef.current.value;
         const eneteredPassword = passwordRef.current.value;
 
-        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDrOuWyBP38zfBWZC5Fp9B7NSOkXPLUmEU',
+        await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDrOuWyBP38zfBWZC5Fp9B7NSOkXPLUmEU',
         {
             method: 'POST',
             body: JSON.stringify({
