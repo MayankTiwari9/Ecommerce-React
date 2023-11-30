@@ -1,14 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import CartContext from "../../store/cart-context";
 import { Link } from "react-router-dom";
 
 const Header = (props) => {
   const cartCtx = useContext(CartContext);
+  const email = localStorage.getItem("email");
+  const updatedEmail = email.replace("@gmail.com", "");
+  const [cartItems, setCartItems] = useState('');
+
 
   const onCartOpenHandler = () => {
     props.setOpenCart(true);
   }
+
+  useEffect( async() => {
+    try {
+      const res = await fetch(
+        `https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}`
+      );
+      const data = await res.json();
+      setCartItems(data.length)
+    } catch (err) {
+      console.log(err.message);
+    }
+  } ,[])
 
   return (
     <div>
@@ -35,7 +51,7 @@ const Header = (props) => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <button onClick={onCartOpenHandler} className="border border-2 border-primary">Cart {cartCtx.items.length}</button>
+            <button onClick={onCartOpenHandler} className="border border-2 border-primary">Cart {props.cartCount}</button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -6,6 +6,7 @@ const Cart = (props) => {
 
   const [cartElements, setCartElements] = useState([]);
 
+  const [total,setTotal]=useState(0)
   const email = localStorage.getItem("email");
   const updatedEmail = email.replace("@gmail.com", "");
 
@@ -16,11 +17,13 @@ const Cart = (props) => {
   const getHandler = async () => {
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/9df7c5fe27cc400889b8a582f8745598/${updatedEmail}`
+        `https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}`
       );
       const data = await res.json();
 
       setCartElements(data);
+      const count= data.reduce((acc,item)=>acc+ item.quantity*item.price,0);
+      setTotal(count)
     } catch (err) {
       console.log(err.message);
     }
@@ -30,11 +33,18 @@ const Cart = (props) => {
     props.setOpenCart(false);
   };
 
-  const onRemoveItemHandler = (index) => {
-    const updatedCart = [...cartElements];
-
-    updatedCart.splice(index, 1);
-    setCartElements(updatedCart);
+  const onRemoveItemHandler = async(id) => {
+    try{
+      const res= await fetch(`https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}/${id}`,{
+        method: "DELETE",
+      })
+      setCartElements((prev) => prev.filter((item)=>item._id !== id))
+      const count = setCartElements.reduce((acc,item)=> acc + item.quantity*item.price,0);
+      setTotal(count);
+      props.getHandler();
+      }catch(err){
+        console.log(err.message)
+      }
   };
 
   return (
@@ -72,10 +82,10 @@ const Cart = (props) => {
               <div className="d-flex flex-row p-2 align-items-center text-black  w-50 text-center">
                 <img
                   className="w-75 rounded"
-                  src={element.imageUrl}
+                  src={element.img1}
                   alt="product"
                 />
-                <p>{element.title}</p>
+                <p>{element.name}</p>
               </div>
               <div className="d-flex flex-column  align-items-center w-50">
                 <p className="w-25 text-center">{element.price}</p>
@@ -90,7 +100,7 @@ const Cart = (props) => {
                   />
                   <button
                     className="text-white bg-danger"
-                    onClick={() => onRemoveItemHandler(index)}
+                    onClick={() => onRemoveItemHandler(element._id)}
                   >
                     REMOVE
                   </button>
@@ -101,7 +111,7 @@ const Cart = (props) => {
         })}
       <div className="d-flex justify-content-around mt-3">
         <h3>Total</h3>
-        <p>${cartCtx.total}</p>
+        <p>₹{total}</p>
       </div>
       <div>
         <button className="text-white bg-primary mx-auto d-flex rounded-3">
