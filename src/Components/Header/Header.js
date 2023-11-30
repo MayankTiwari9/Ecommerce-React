@@ -29,6 +29,9 @@ const Header = (props) => {
               <Nav.Link as={Link} to="/contact" className="active">
                 CONTACT US
               </Nav.Link>
+              <Nav.Link as={Link} to="/auth" className="active">
+                LOG IN
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">

@@ -69,7 +69,7 @@ const Products = () => {
         {productsArr &&
           productsArr.map((product) => {
             return (
-              <Link to={`/productdetails/${product.id}`}
+              <Link className="text-decoration-none" to={`/productdetails/${product.id}`}
               key={product.id}>
                 <Card
                   key={product.id}
