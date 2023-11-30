@@ -1,10 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import CartContext from "../../store/cart-context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import TokenContext from "../../store/token-context";
 
 const Products = () => {
   const cartCtx = useContext(CartContext);
+  const tokenContext = useContext(TokenContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!tokenContext.isLoggedIn) {
+      navigate("/auth");
+    }
+  }, [tokenContext.isLoggedIn, navigate]);
 
   const addToCartHandler = (item) => {
     cartCtx.addItem({

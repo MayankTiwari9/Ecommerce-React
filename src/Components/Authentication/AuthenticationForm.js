@@ -1,8 +1,10 @@
 import React, { useContext, useRef } from 'react'
 import TokenContext from '../../store/token-context';
+import { useNavigate } from 'react-router-dom';
 
 const AuthenticationForm = () => {
     const tokenContext  = useContext(TokenContext);
+    const navigate = useNavigate();
 
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -37,10 +39,13 @@ const AuthenticationForm = () => {
           })
           .then((data) => {
             tokenContext.login(data.idToken);
+            navigate("/store")
           })
           .catch((err) => {
             console.log(err);
           })
+
+
     }
 
   return (

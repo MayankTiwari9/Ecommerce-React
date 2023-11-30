@@ -2,11 +2,15 @@ import React, { useState } from "react";
 
 const TokenContext = React.createContext({
   token: "",
+  isLoggedIn: false,
   login: (token) => {},
 });
 
 export const TokenContextProvider = (props) => {
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem("token");
+  const [token, setToken] = useState(initialToken);
+
+  const userIsLoggedIn = !!token;
 
   const loginHandler = (token) => {
     setToken(token);
@@ -15,6 +19,7 @@ export const TokenContextProvider = (props) => {
 
   const contextValue = {
     token: token,
+    isLoggedIn: userIsLoggedIn,
     login: loginHandler,
   };
 

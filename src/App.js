@@ -23,9 +23,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/store" element={<Products />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<ContactUs/>}/>
-          <Route path="/productdetails/:productid" element={<ProductDetail/>}/>
-          <Route path="/auth" element={<AuthenticationForm/>}/>
+          <Route path="/contact" element={<ContactUs />} />
+          <Route
+            path="/productdetails/:productid"
+            element={<ProductDetail />}
+          />
+          <Route path="/auth" element={<AuthenticationForm />} />
         </Routes>
         <Footer />
       </Router>
