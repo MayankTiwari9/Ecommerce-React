@@ -3,17 +3,22 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Header = (props) => {
-
   const onCartOpenHandler = () => {
     props.setOpenCart(true);
-  }
+  };
 
   return (
     <div>
-      <Navbar expand="lg" className="position-fixed w-100 mt-0 p-0" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
+      <Navbar
+        expand="lg"
+        className="position-fixed w-100 mt-0 p-0"
+        bg="black"
+        style={{ zIndex: 100 }}
+        data-bs-theme="dark"
+      >
         <Container>
           <Navbar.Brand href="/">Ecommerce</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/" className="active">
@@ -34,15 +39,23 @@ const Header = (props) => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <button onClick={onCartOpenHandler} className="border border-2 border-primary">Cart {props.cartCount}</button>
+            <button
+              onClick={onCartOpenHandler}
+              className="border border-2 border-primary"
+            >
+              Cart {props.cartCount}
+            </button>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div className='d-flex justify-content-center bg-secondary mx-auto w-100' style={{height: "40vh"}}>
-      <h1 className='display-2 fw-bold d-flex align-items-center text-white'>
-        The Generics
-      </h1>
-    </div>
+      <div
+        className="d-flex justify-content-center bg-secondary mx-auto w-100"
+        style={{ height: "40vh" }}
+      >
+        <h1 className="display-2 fw-bold d-flex align-items-center text-white">
+          The Generics
+        </h1>
+      </div>
     </div>
   );
 };

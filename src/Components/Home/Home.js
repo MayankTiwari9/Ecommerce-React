@@ -42,7 +42,7 @@ const Home = () => {
         </h3>
         <button
           className="d-block bg-secondary border border-primary border-2 rounded-circle fs-1 fw-bold text-primary"
-          style={{width: "8%", padding: "20px", margin: "20px auto"}}
+          style={{ width: "8%", padding: "20px", margin: "20px auto" }}
         >
           ►
         </button>

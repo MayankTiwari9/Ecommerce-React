@@ -4,11 +4,20 @@ import CartContext from "../../store/cart-context";
 import { Link, useNavigate } from "react-router-dom";
 import TokenContext from "../../store/token-context";
 import { productsArr } from "./ProductArray";
+import { useAlert } from "react-alert";
 
 const Products = (props) => {
   const cartCtx = useContext(CartContext);
   const tokenContext = useContext(TokenContext);
   const navigate = useNavigate();
+  const alert = useAlert();
+
+  const isAuthenticated = localStorage.getItem("token") && localStorage.getItem("email");
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/auth");
+    }
+  }, [isAuthenticated, navigate]);
 
   const userEmail = localStorage.getItem("email");
   const updatedEmail = userEmail.replace("@gmail.com", "");
@@ -19,8 +28,9 @@ const Products = (props) => {
     }
   }, [tokenContext.isLoggedIn, navigate]);
 
+
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`;
+    const apiUrl = `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`;
 
     try {
       const res = await fetch(apiUrl);
@@ -36,24 +46,29 @@ const Products = (props) => {
         await fetch(`${apiUrl}/${id}`, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",// Add this line
+            "Content-Type": "application/json", // Add this line
           },
           body: JSON.stringify({ ...item, quantity: quantity }),
         });
-
+        
+        alert.success("Item Updated in Cart");
       } else {
         await fetch(apiUrl, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",// Add this line
+            "Content-Type": "application/json", // Add this line
           },
           body: JSON.stringify({ ...item, quantity: 1 }),
         });
+
+        alert.success("Item Added To Cart");
       }
       props.getHandlder();
     } catch (err) {
       console.log(err);
     }
+
+
 
     cartCtx.addItem({
       id: item.id,
@@ -66,12 +81,12 @@ const Products = (props) => {
 
   const cartOpenHandler = () => {
     props.setOpenCart(true);
-  }
+  };
 
   return (
     <div className="d-flex flex-column w-50 justify-content-center mx-auto">
       <h1 className="d-flex justify-content-center fst-italic">MUSIC</h1>
-      <div className="d-flex flex-column">
+      <div className="d-flex flex-row flex-wrap mb-5">
         {productsArr &&
           productsArr.map((product) => {
             return (
@@ -84,6 +99,7 @@ const Products = (props) => {
                   className="text-decoration-none"
                   to={`/productdetails/${product.id}`}
                   key={product.id}
+                  style={{ height: "400px" }}
                 >
                   <Card.Title className="text-dark">{product.title}</Card.Title>
                   <Card.Img variant="top" src={product.img1} />
@@ -102,7 +118,8 @@ const Products = (props) => {
           })}
       </div>
 
-      <Button onClick={cartOpenHandler}
+      <Button
+        onClick={cartOpenHandler}
         variant="secondary d-flex mx-auto mb-5 justify-content-center text-black"
         style={{ width: "200px" }}
       >

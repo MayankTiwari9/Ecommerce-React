@@ -1,29 +1,31 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useAlert } from "react-alert";
 
 const Cart = (props) => {
-
   const [cartElements, setCartElements] = useState([]);
+  const alert = useAlert();
 
-  const [total,setTotal]=useState(0)
+  const [total, setTotal] = useState(0);
   const email = localStorage.getItem("email");
   const updatedEmail = email.replace("@gmail.com", "");
 
-  
-
-  const getHandler =  useCallback( async() => {
+  const getHandler = useCallback(async () => {
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`
+        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`
       );
       const data = await res.json();
 
       setCartElements(data);
-      const count= data.reduce((acc,item)=>acc+ item.quantity*item.price,0);
-      setTotal(count)
+      const count = data.reduce(
+        (acc, item) => acc + item.quantity * item.price,
+        0
+      );
+      setTotal(count);
     } catch (err) {
       console.log(err.message);
     }
-  },[updatedEmail]);
+  }, [updatedEmail]);
 
   useEffect(() => {
     getHandler();
@@ -35,30 +37,37 @@ const Cart = (props) => {
 
   const onRemoveItemHandler = async (id) => {
     try {
-      await fetch(`https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}/${id}`, {
-        method: "DELETE",
-      });
-  
+      await fetch(
+        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
       // Fetch the updated data from the API
       const res = await fetch(
-        `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`
+        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`
       );
       const data = await res.json();
-  
+
       // Update the state based on the fetched data
       setCartElements(data);
-  
+
       // Recalculate the total based on the updated data
-      const count = data.reduce((acc, item) => acc + item.quantity * item.price, 0);
+      const count = data.reduce(
+        (acc, item) => acc + item.quantity * item.price,
+        0
+      );
       setTotal(count);
-  
+
       // Call the parent component's handler to update the count in the header
       await props.getHandlder();
+
+      alert.success("Item Removed From Cart");
     } catch (err) {
       console.log(err.message);
     }
   };
-  
 
   return (
     <div

@@ -6,7 +6,11 @@ const About = () => {
       <div>
         <h3 className="d-flex mx-auto justify-content-center">About</h3>
         <div className="d-flex m-4">
-          <img className="rounded-circle w-25 m-3" src="https://prasadyash2411.github.io/ecom-website/img/Band%20Members.png" alt="bandMembers"/>
+          <img
+            className="rounded-circle w-25 m-3"
+            src="https://prasadyash2411.github.io/ecom-website/img/Band%20Members.png"
+            alt="bandMembers"
+          />
           <p>
             Lorem ipsum carrots enhanced rebates. Excellent sayings of a man of
             sorrows, hates no prosecutors will unfold in the enduring of which

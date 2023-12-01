@@ -3,9 +3,11 @@ import { Badge, Button, Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { productsArr } from "../Products/ProductArray";
 import CartContext from "../../store/cart-context";
+import { useAlert } from "react-alert";
 
 const ProductDetail = (props) => {
   const cartCtx = useContext(CartContext);
+  const alert = useAlert();
   const params = useParams();
   const productId = params.productid.replace(":", "");
   const userEmail = localStorage.getItem("email");
@@ -16,7 +18,7 @@ const ProductDetail = (props) => {
   );
 
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`;
+    const apiUrl = `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`;
 
     try {
       const res = await fetch(apiUrl);
@@ -32,19 +34,21 @@ const ProductDetail = (props) => {
         await fetch(`${apiUrl}/${id}`, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",// Add this line
+            "Content-Type": "application/json", 
           },
           body: JSON.stringify({ ...item, quantity: quantity }),
         });
-
+        alert.success("Item Updated in Cart");
       } else {
         await fetch(apiUrl, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",// Add this line
+            "Content-Type": "application/json", 
           },
           body: JSON.stringify({ ...item, quantity: 1 }),
         });
+        
+        alert.success("Item Added to Cart");
       }
       props.getHandlder();
     } catch (err) {
@@ -93,7 +97,12 @@ const ProductDetail = (props) => {
           </Carousel>
           <div className="button-container">
             <Button variant="outline-success">Buy Now</Button>
-            <Button onClick={() => addToCartHandler(selectedProduct)} variant="outline-warning">Add to Cart</Button>
+            <Button
+              onClick={() => addToCartHandler(selectedProduct)}
+              variant="outline-warning"
+            >
+              Add to Cart
+            </Button>
           </div>
         </div>
 
