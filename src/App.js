@@ -24,7 +24,7 @@ function App() {
 
   const getHandlder= useCallback( async()=>{
     try{
-      const res= await fetch(`https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updated}`)
+      const res= await fetch(`https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updated}`)
       const data= await res.json()
       count(data)   
     }catch(err){
@@ -43,12 +43,12 @@ function App() {
         {openCart && <Cart getHandlder={getHandlder} setOpenCart={setOpenCart} />}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/store" element={<Products getHandlder={getHandlder} count={count}/>} />
+          <Route path="/store" element={<Products setOpenCart={setOpenCart} getHandlder={getHandlder} count={count}/>} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route
             path="/productdetails/:productid"
-            element={<ProductDetail />}
+            element={<ProductDetail  getHandlder={getHandlder}/>}
           />
           <Route path="/auth" element={<AuthenticationForm />} />
         </Routes>

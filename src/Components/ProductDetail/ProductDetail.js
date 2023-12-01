@@ -1,15 +1,64 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Badge, Button, Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { productsArr } from "../Products/ProductArray";
+import CartContext from "../../store/cart-context";
 
-const ProductDetail = () => {
+const ProductDetail = (props) => {
+  const cartCtx = useContext(CartContext);
   const params = useParams();
   const productId = params.productid.replace(":", "");
+  const userEmail = localStorage.getItem("email");
+  const updatedEmail = userEmail.replace("@gmail.com", "");
 
   const selectedProduct = productsArr.find(
     (product) => product.id === parseInt(productId, 10)
   );
+
+  const addToCartHandler = async (item) => {
+    const apiUrl = `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`;
+
+    try {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+
+      const existingItem = data.find((element) => element.id === item.id);
+
+      if (existingItem) {
+        const quantity = existingItem.quantity + 1;
+
+        const id = existingItem._id;
+
+        await fetch(`${apiUrl}/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",// Add this line
+          },
+          body: JSON.stringify({ ...item, quantity: quantity }),
+        });
+
+      } else {
+        await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",// Add this line
+          },
+          body: JSON.stringify({ ...item, quantity: 1 }),
+        });
+      }
+      props.getHandlder();
+    } catch (err) {
+      console.log(err);
+    }
+
+    cartCtx.addItem({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      imageUrl: item.imageUrl,
+      quantity: item.quantity || 1,
+    });
+  };
 
   return (
     <>
@@ -44,7 +93,7 @@ const ProductDetail = () => {
           </Carousel>
           <div className="button-container">
             <Button variant="outline-success">Buy Now</Button>
-            <Button variant="outline-warning">Add to Cart</Button>
+            <Button onClick={() => addToCartHandler(selectedProduct)} variant="outline-warning">Add to Cart</Button>
           </div>
         </div>
 

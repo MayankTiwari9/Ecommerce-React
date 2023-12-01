@@ -13,7 +13,7 @@ const Cart = (props) => {
   const getHandler =  useCallback( async() => {
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}`
+        `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`
       );
       const data = await res.json();
 
@@ -33,19 +33,32 @@ const Cart = (props) => {
     props.setOpenCart(false);
   };
 
-  const onRemoveItemHandler = async(id) => {
-    try{
-      await fetch(`https://crudcrud.com/api/8411ebd42c694da885708d8522a64e8c/${updatedEmail}/${id}`,{
+  const onRemoveItemHandler = async (id) => {
+    try {
+      await fetch(`https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}/${id}`, {
         method: "DELETE",
-      })
-      setCartElements((prev) => prev.filter((item)=>item._id !== id))
-      const count = setCartElements.reduce((acc,item)=> acc + item.quantity*item.price,0);
+      });
+  
+      // Fetch the updated data from the API
+      const res = await fetch(
+        `https://crudcrud.com/api/ca48bfc16702419b8ddb0b45517921fd/${updatedEmail}`
+      );
+      const data = await res.json();
+  
+      // Update the state based on the fetched data
+      setCartElements(data);
+  
+      // Recalculate the total based on the updated data
+      const count = data.reduce((acc, item) => acc + item.quantity * item.price, 0);
       setTotal(count);
-      props.getHandler();
-      }catch(err){
-        console.log(err.message)
-      }
+  
+      // Call the parent component's handler to update the count in the header
+      await props.getHandlder();
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+  
 
   return (
     <div

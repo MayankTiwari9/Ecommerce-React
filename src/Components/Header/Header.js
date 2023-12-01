@@ -12,7 +12,7 @@ const Header = (props) => {
     <div>
       <Navbar className="position-fixed w-100 mt-0 p-0" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">Ecommerce</Navbar.Brand>
+          <Navbar.Brand href="/">Ecommerce</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav" >
             <Nav className="me-auto">
               <Nav.Link href="/" className="active">
