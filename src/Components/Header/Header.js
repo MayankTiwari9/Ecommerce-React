@@ -10,10 +10,11 @@ const Header = (props) => {
 
   return (
     <div>
-      <Navbar className="position-fixed w-100 mt-0 p-0" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
+      <Navbar expand="lg" className="position-fixed w-100 mt-0 p-0" bg="black" style={{ zIndex: 100 }} data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="/">Ecommerce</Navbar.Brand>
-          <Navbar.Collapse id="basic-navbar-nav" >
+          <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/" className="active">
                 HOME
