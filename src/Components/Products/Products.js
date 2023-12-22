@@ -30,7 +30,7 @@ const Products = (props) => {
   }, [tokenContext.isLoggedIn, navigate]);
 
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://ecommerce-react-ee6a9-default-rtdb.firebaseio.com/${updatedEmail}/products`;
+    const apiUrl = `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}/products`;
 
     try {
       const res = await fetch(`${apiUrl}.json`);

@@ -36,6 +36,9 @@ const Header = (props) => {
               <Nav.Link as={Link} to="/auth" className="active">
                 LOG IN
               </Nav.Link>
+              <Nav.Link as={Link} to="/signup" className="active">
+                SIGN UP
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">

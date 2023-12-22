@@ -18,7 +18,7 @@ const ProductDetail = (props) => {
   );
 
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`;
+    const apiUrl = `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}`;
 
     try {
       const res = await fetch(apiUrl);

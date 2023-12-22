@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f61c5005.css",
+    "main.js": "/static/js/main.25fbe3f4.js",
+    "static/js/27.c7a0a2e7.chunk.js": "/static/js/27.c7a0a2e7.chunk.js",
+    "static/media/icons8-spotify.svg": "/static/media/icons8-spotify.4e33307a9d965afe5001fa15d978cfac.svg",
+    "index.html": "/index.html",
+    "static/media/icons8-youtube.svg": "/static/media/icons8-youtube.6806408aa1bf55b7f1aaba51978e649e.svg",
+    "static/media/icons8-facebook.svg": "/static/media/icons8-facebook.5e1cb4b86ac3f872dadcbde3ed31cd4b.svg"
+  },
+  "entrypoints": [
+    "static/css/main.f61c5005.css",
+    "static/js/main.25fbe3f4.js"
+  ]
+}
