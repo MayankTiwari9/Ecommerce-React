@@ -18,17 +18,22 @@ function App() {
   const updated = email ? email.replace("@gmail.com", "") : "";
 
   const count = (data) => {
-    const item = data.reduce((acc, item) => acc + 1, 0);
-    setCartCount(item);
+    const item = Object.keys(data).length;
+  setCartCount(item);
   };
 
   const getHandlder = useCallback(async () => {
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updated}`
+        `https://ecommerce-react-ee6a9-default-rtdb.firebaseio.com/${updated}/products.json`
       );
       const data = await res.json();
-      count(data);
+      if (!data) {
+        setCartCount(0);
+      }
+      else{
+        count(data);
+      }
     } catch (err) {
       console.log(err);
     }

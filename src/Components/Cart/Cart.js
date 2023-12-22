@@ -12,12 +12,17 @@ const Cart = (props) => {
   const getHandler = useCallback(async () => {
     try {
       const res = await fetch(
-        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`
+        `https://ecommerce-react-ee6a9-default-rtdb.firebaseio.com/${updatedEmail}/products.json`
       );
       const data = await res.json();
 
-      setCartElements(data);
-      const count = data.reduce(
+      const dataAsArray = Object.entries(data).map(([key, value]) => ({
+        ...value,
+        _id: key,
+      }));
+      setCartElements(dataAsArray);
+
+      const count = dataAsArray.reduce(
         (acc, item) => acc + item.quantity * item.price,
         0
       );
@@ -38,7 +43,7 @@ const Cart = (props) => {
   const onRemoveItemHandler = async (id) => {
     try {
       await fetch(
-        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}/${id}`,
+        `https://ecommerce-react-ee6a9-default-rtdb.firebaseio.com/${updatedEmail}/products/${id}.json`,
         {
           method: "DELETE",
         }
@@ -46,19 +51,28 @@ const Cart = (props) => {
 
       // Fetch the updated data from the API
       const res = await fetch(
-        `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`
+        `https://ecommerce-react-ee6a9-default-rtdb.firebaseio.com/${updatedEmail}/products.json`
       );
       const data = await res.json();
 
-      // Update the state based on the fetched data
-      setCartElements(data);
+      if (!data) {
+        setCartElements([]); // Set cartElements to an empty array if data is undefined or null
+        setTotal(0);
+      }else{
 
-      // Recalculate the total based on the updated data
-      const count = data.reduce(
+      // Update the state based on the fetched data
+      const dataAsArray = Object.entries(data).map(([key, value]) => ({
+        ...value,
+        _id: key,
+      }));
+      setCartElements(dataAsArray);
+
+      const count = dataAsArray.reduce(
         (acc, item) => acc + item.quantity * item.price,
         0
       );
       setTotal(count);
+    }
 
       // Call the parent component's handler to update the count in the header
       await props.getHandlder();
@@ -68,6 +82,7 @@ const Cart = (props) => {
       console.log(err.message);
     }
   };
+
 
   return (
     <div
@@ -95,7 +110,7 @@ const Cart = (props) => {
         </h5>
       </div>
       {cartElements &&
-        cartElements.map((element, index) => {
+        cartElements.map((element, index) => {    
           return (
             <div
               className="d-flex flex-row align-items-center justify-content-center mt-3"

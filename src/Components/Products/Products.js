@@ -12,7 +12,8 @@ const Products = (props) => {
   const navigate = useNavigate();
   const alert = useAlert();
 
-  const isAuthenticated = localStorage.getItem("token") && localStorage.getItem("email");
+  const isAuthenticated =
+    localStorage.getItem("token") && localStorage.getItem("email");
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/auth");
@@ -28,29 +29,52 @@ const Products = (props) => {
     }
   }, [tokenContext.isLoggedIn, navigate]);
 
-
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://crudcrud.com/api/cbc662b5654247b4ae4edfcfcfd109c3/${updatedEmail}`;
+    const apiUrl = `https://ecommerce-react-ee6a9-default-rtdb.firebaseio.com/${updatedEmail}/products`;
 
     try {
-      const res = await fetch(apiUrl);
+      const res = await fetch(`${apiUrl}.json`);
       const data = await res.json();
 
-      const existingItem = data.find((element) => element.id === item.id);
+      if (!data) {
+        // If the endpoint does not exist, create it
+        await fetch(`${apiUrl}.json`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...item, quantity: 1 }),
+        });
+
+        alert.success("Item Added To Cart");
+        props.getHandlder(); // Assuming this updates the cart count in the header
+        return;
+      }
+
+      const dataAsArray = Object.entries(data).map(([key, value]) => ({
+        ...value,
+        _id: key,
+      }));
+
+
+      const existingItem = dataAsArray.find(
+        (element) => element.id === item.id
+      );
+
 
       if (existingItem) {
         const quantity = existingItem.quantity + 1;
 
         const id = existingItem._id;
 
-        await fetch(`${apiUrl}/${id}`, {
+        await fetch(`${apiUrl}/${id}.json`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json", // Add this line
           },
           body: JSON.stringify({ ...item, quantity: quantity }),
         });
-        
+
         alert.success("Item Updated in Cart");
       } else {
         await fetch(apiUrl, {
@@ -67,8 +91,6 @@ const Products = (props) => {
     } catch (err) {
       console.log(err);
     }
-
-
 
     cartCtx.addItem({
       id: item.id,
