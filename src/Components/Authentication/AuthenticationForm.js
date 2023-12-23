@@ -45,7 +45,7 @@ const AuthenticationForm = () => {
       .then((data) => {
         tokenContext.login(data.idToken);
         localStorage.setItem("email", data.email);
-        navigate("/store");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -85,6 +85,7 @@ const AuthenticationForm = () => {
         >
           Login
         </button>
+        <a className="text-decoration-none text-dark" href="/signup">New User? Sign Up</a>
       </div>
     </form>
   );

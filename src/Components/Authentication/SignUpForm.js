@@ -82,6 +82,7 @@ const SignUpForm = () => {
         >
           Login
         </button>
+        <a className="text-decoration-none text-dark"  href="/auth">Already Have an account? Login</a>
       </div>
     </form>
   )

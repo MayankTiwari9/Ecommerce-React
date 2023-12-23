@@ -52,12 +52,12 @@ function App() {
           <Cart getHandlder={getHandlder} setOpenCart={setOpenCart} />
         )}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           {!token && 
             <Route path="/auth" element={<AuthenticationForm />} />
           }
           <Route
-            path="/store"
+            path="/"
             element={
               <Products
                 setOpenCart={setOpenCart}

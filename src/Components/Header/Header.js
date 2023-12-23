@@ -1,11 +1,19 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = (props) => {
+  const navigate = useNavigate();
+
   const onCartOpenHandler = () => {
     props.setOpenCart(true);
   };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    navigate("/auth")
+  }
 
   return (
     <div>
@@ -21,10 +29,10 @@ const Header = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/" className="active">
+              <Nav.Link href="/home" className="active">
                 HOME
               </Nav.Link>
-              <Nav.Link href="/store" className="active">
+              <Nav.Link href="/" className="active">
                 STORE
               </Nav.Link>
               <Nav.Link as={Link} to="/about" className="active">
@@ -42,6 +50,12 @@ const Header = (props) => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
+          <button
+              onClick={logoutHandler}
+              className="btn btn-danger m-2"
+            >
+              Logout
+            </button>
             <button
               onClick={onCartOpenHandler}
               className="border border-2 border-primary"
