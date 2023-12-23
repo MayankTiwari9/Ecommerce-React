@@ -27,7 +27,7 @@ function App() {
   const getHandlder = useCallback(async () => {
     try {
       const res = await fetch(
-        `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updated}/products.json`
+        `https://ecommerce-react-f995d-default-rtdb.firebaseio.com/${updated}/products.json`
       );
       const data = await res.json();
       if (!data) {

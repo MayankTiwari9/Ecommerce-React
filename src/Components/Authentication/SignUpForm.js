@@ -1,8 +1,10 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
+import TokenContext from "../../store/token-context";
 
 const SignUpForm = () => {
+  const tokenContext = useContext(TokenContext);
     
   const navigate = useNavigate();
   const alert = useAlert();
@@ -17,7 +19,7 @@ const SignUpForm = () => {
         const eneteredPassword = passwordRef.current.value;
     
         await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAr-7MVii5cKTSvCZs_1cOcYqi7K-zgtmU",
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBLj0uWEx_6d-Dy5wEomYTDvAAyFO8uZ10",
           {
             method: "POST",
             body: JSON.stringify({
@@ -42,7 +44,9 @@ const SignUpForm = () => {
             }
           })
           .then((data) => {
-            navigate("/store");
+            tokenContext.login(data.idToken);
+            localStorage.setItem("email", data.email);
+            navigate("/");
           })
           .catch((err) => {
             console.log(err);

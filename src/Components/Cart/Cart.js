@@ -12,7 +12,7 @@ const Cart = (props) => {
   const getHandler = useCallback(async () => {
     try {
       const res = await fetch(
-        `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}/products.json`
+        `https://ecommerce-react-f995d-default-rtdb.firebaseio.com/${updatedEmail}/products.json`
       );
       const data = await res.json();
 
@@ -43,7 +43,7 @@ const Cart = (props) => {
   const onRemoveItemHandler = async (id) => {
     try {
       await fetch(
-        `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}/products/${id}.json`,
+        `https://ecommerce-react-f995d-default-rtdb.firebaseio.com/${updatedEmail}/products/${id}.json`,
         {
           method: "DELETE",
         }
@@ -51,7 +51,7 @@ const Cart = (props) => {
 
       // Fetch the updated data from the API
       const res = await fetch(
-        `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}/products.json`
+        `https://ecommerce-react-f995d-default-rtdb.firebaseio.com/${updatedEmail}/products.json`
       );
       const data = await res.json();
 

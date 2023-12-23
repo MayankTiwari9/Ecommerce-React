@@ -21,7 +21,13 @@ const Products = (props) => {
   }, [isAuthenticated, navigate]);
 
   const userEmail = localStorage.getItem("email");
-  const updatedEmail = userEmail.replace("@gmail.com", "");
+  let updatedEmail;
+
+  if( !userEmail){
+    navigate("/auth");
+  }else{
+    updatedEmail = userEmail.replace("@gmail.com", "");
+  }
 
   useEffect(() => {
     if (!tokenContext.isLoggedIn) {
@@ -30,7 +36,7 @@ const Products = (props) => {
   }, [tokenContext.isLoggedIn, navigate]);
 
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}/products`;
+    const apiUrl = `https://ecommerce-react-f995d-default-rtdb.firebaseio.com/${updatedEmail}/products`;
 
     try {
       const res = await fetch(`${apiUrl}.json`);
@@ -77,7 +83,7 @@ const Products = (props) => {
 
         alert.success("Item Updated in Cart");
       } else {
-        await fetch(apiUrl, {
+        await fetch(`${apiUrl}.json`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Add this line

@@ -18,7 +18,7 @@ const ProductDetail = (props) => {
   );
 
   const addToCartHandler = async (item) => {
-    const apiUrl = `https://ecommerce-website-62ebe-default-rtdb.firebaseio.com/${updatedEmail}`;
+    const apiUrl = `https://ecommerce-react-f995d-default-rtdb.firebaseio.com/${updatedEmail}`;
 
     try {
       const res = await fetch(apiUrl);
